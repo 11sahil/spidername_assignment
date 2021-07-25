@@ -1,0 +1,34 @@
+n,m=map(int,input().strip().split())
+dt={}
+for i in range(m):
+    a,b,c=map(int,input().strip().split())
+    t=(a,b)
+    dt[t]=c
+pat={}
+for i in range(1,n+1):
+    lin=list(map(int,input().strip().split()))
+    pat[i]=set(lin[1:lin[0]+1])
+
+# print(dt,pat)
+lst=[]
+def path_finder(s,n,sm):
+    if s==n:
+        return sm
+    for i in range(s+1,n+1):
+        # print(s,i)
+        if (s,i) in dt:
+            if s==1:
+                sm=dt[(s,i)]
+            else:
+                while sm in pat[s]:
+                    sm+=1
+                c=dt[(s,i)]
+                # print(c,sm,"********",s,i)
+                sm=sm+c
+            ele=path_finder(i,n,sm)
+            # print("------",ele,s,i)
+            if ele !=False:
+                lst.append(ele)
+    return False
+path_finder(1,n,0)
+print("result==>",min(lst))
